@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <ui:insert name="header" >
+        <ui:include src="/WEB-INF/template.xhtml" />
+    </ui:insert>
+    <title>Log In</title>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <div class="jumbotron">
+            <h2>Welcome to the Task Management System!</h2>
+            <div class="alert alert-info">
+                <p>Please, log in to access the application...</p>
+            </div>
+            <form method="post" action="j_security_check" class="form-horizontal">
+                <div class="form-group">
+                    <h:outputLabel class="control-label col-sm-2" for="j_username"
+                                           value="User name:"/>
+                    <div class="col-sm-4">
+                        <h:inputText class="form-control" id="j_username" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="j_password" class="control-label col-sm-2"
+                                           value="Password:"/>
+                    <div class="col-sm-4">
+                        <h:inputSecret id="j_password" autocomplete="off" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="btn-group col-sm-offset-2 col-sm-4">
+                        <h:commandButton type="submit" value="Submit" class="btn btn-success"/>
+                        <h:commandButton type="reset" value="Reset" class="btn btn-warning"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</h:body>
+
+</html>

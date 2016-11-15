@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Deleting subtask</title>
+</h:head>
+
+<h:body>
+    <h1>Deleting subtask</h1>
+    <h:form>
+        <div class="form-group">
+            <h:outputLabel class="control-label col-sm-4" value="Choose project: " />
+            <div class="col-sm-8">
+                <h:selectOneListbox class="form-control" id="projectId" value="#{subtaskController.project.id}" >
+                    <f:selectItems value="#{subtaskController.manager.projects}" var="projectItem"
+                                   itemLabel="#{projectItem.name}" itemValue="#{projectItem.id}"/>
+                        <f:ajax listener="#{subtaskController.initProject()}" render="subtaskId"/>
+                </h:selectOneListbox>
+            </div>
+        </div>
+        <!--<div class="form-group">-->
+            <h:panelGroup id="subtaskId">
+        <!--<h:outputLabel class="control-label col-sm-4" value="Choose project: " />-->
+        <!--<div class="col-sm-8">-->
+            <h:selectOneListbox class="form-control"  value="#{subtaskController.subtask.id}" >
+                <f:selectItems value="#{subtaskController.project.subtasks}" var="subtaskItem"
+                               itemLabel="#{subtaskItem.name}" itemValue="#{subtaskItem.id}"/>
+            </h:selectOneListbox>
+        <!--</div>-->
+            </h:panelGroup>
+    <!--</div>-->
+        <p><h:commandButton value="Delete" action="#{subtaskController.delete}"/></p>
+    </h:form>
+</h:body>
+<h:form>
+    <p><h:commandLink value="Logout" action="#{logoutController.logout}" /></p>
+</h:form>
+
+</html>

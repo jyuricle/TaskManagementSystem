@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Adding new subtask</title>
+    <ui:insert name="header" >
+        <ui:include src="/WEB-INF/template.xhtml" />
+    </ui:insert>
+</h:head>
+
+<h:body>
+    <ui:include src="/WEB-INF/navbar.xhtml" />
+    <div class="container">
+        <div class="jumbotron">
+            <div class="panel panel-info">
+                <div class="panel-heading"><h1>Adding new subtask</h1></div>
+                <div class="panel-body">
+                    <h:form class="form-horizontal">
+                        <div class="form-group">
+                            <h:outputLabel class="control-label col-sm-4" value="Choose project: " />
+                            <div class="col-sm-8">
+                                <h:selectOneListbox class="form-control" id="projectItem" value="#{subtaskController.project.id}" >
+                                    <f:selectItems value="#{subtaskController.manager.projects}" var="projectItem"
+                                                   itemLabel="#{projectItem.name}" itemValue="#{projectItem.id}"/>
+                                </h:selectOneListbox>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel class="control-label col-sm-4" value="Enter name: " />
+                            <div class="col-sm-8">
+                                <h:inputText  id="name" value="#{subtaskController.subtask.name}"
+                                              validatorMessage="Name has wrong format!">
+                                    <f:validateRegex pattern="^[\p{L}\s0-9'.-]+$" />
+                                    <f:ajax render="message1"/>
+                                </h:inputText>
+                                <h:message id="message1" for="name" styleClass="alert alert-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel class="control-label col-sm-4" value="Enter description: " />
+                            <div class="col-sm-8">
+                                <h:inputTextarea id="description" value="#{subtaskController.subtask.description}"
+                                                 class="form-control" rows="10" cols="50"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel class="control-label col-sm-4" value="Enter start date (in format: dd-MM-yyyy): " />
+                            <div class="col-sm-8">
+                                <h:inputText id="start" value="#{subtaskController.subtask.start}"
+                                             converterMessage="Can not convert input to date!">
+                                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                    <f:ajax render="message2" />
+                                </h:inputText>
+                                <h:message id="message2" for="start" styleClass="alert alert-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel class="control-label col-sm-4" value="Enter end date (in format dd/MM/yyyy): " />
+                            <div class="col-sm-8">
+                                <h:inputText id="end" value="#{subtaskController.subtask.deadline}"
+                                             converterMessage="Can not convert input to date!">
+                                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                    <f:ajax render="message3"/>
+                                </h:inputText>
+                                <h:message id="message3" for="end" styleClass="alert alert-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel class="control-label col-sm-4" value="Choose priority: " />
+                            <div class="col-sm-8">
+                                <h:selectOneMenu class="form-control" value="#{subtaskController.priority}">
+                                    <f:selectItem itemValue="1" itemLabel="Low" />
+                                    <f:selectItem itemValue="2" itemLabel="Medium" />
+                                    <f:selectItem itemValue="3" itemLabel="High" />
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel class="control-label col-sm-4" value="Choose subordinate: " />
+                            <div class="col-sm-8">
+                                <h:selectOneMenu class="form-control" id="subordinateItem" value="#{subtaskController.subordinate.id}" >
+                                    <f:selectItems value="#{subordinateController.subordinateList}" var="subordinateItem"
+                                                   itemLabel="#{subordinateItem.firstName} #{subordinateItem.lastName}" itemValue="#{subordinateItem.id}"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-2">
+                                <h:commandButton class="btn btn-warning" value="Add" action="#{subtaskController.add}" />
+                            </div>
+                        </div>
+                    </h:form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</h:body>
+
+
+</html>

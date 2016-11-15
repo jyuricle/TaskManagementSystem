@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Adding new subordinate</title>
+    <ui:insert name="header" >
+        <ui:include src="/WEB-INF/template.xhtml" />
+    </ui:insert>
+</h:head>
+
+<h:body>
+    <ui:include src="/WEB-INF/navbar.xhtml" />
+    <div class="container">
+        <div class="jumbotron">
+            <div class="panel panel-info">
+                <div class="panel-heading"><h1>Adding new subordinate</h1></div>
+                <div class="panel-body">
+                    <h:form class="form-horizontal">
+                        <div class="form-group">
+                            <h:outputLabel class="control-label col-sm-4" value="Enter first name: " />
+                            <div class="col-sm-8">
+                                <h:inputText  id="firstName" value="#{subordinateController.subordinate.firstName}"
+                                              validatorMessage="First name has wrong format!">
+                                    <f:validateRegex pattern="^[A-Z][a-zA-Z]+$" />
+                                    <f:ajax render="message1"/>
+                                </h:inputText>
+                                <h:message id="message1" for="firstName" styleClass="alert alert-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel class="control-label col-sm-4" value="Enter last name: " />
+                            <div class="col-sm-8">
+                                <h:inputText id="lastName" value="#{subordinateController.subordinate.lastName}"
+                                             validatorMessage="Last name has wrong format!">
+                                    <f:validateRegex pattern="^[A-Z][a-zA-Z]+$" />
+                                    <f:ajax render="message2"/>
+                                </h:inputText>
+                                <h:message id="message2" for="lastName" styleClass="alert alert-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel class="control-label col-sm-4" value="Enter user name for manager: " />
+                            <div class="col-sm-8">
+                                <h:inputText id="username" value="#{subordinateController.user.userName}"
+                                             validatorMessage="User name has wrong format!">
+                                    <f:validateRegex id="message3" pattern="^[a-zA-Z][a-zA-Z0-9-_\\.]{1,20}$" />
+                                    <f:ajax render="message3"/>
+                                </h:inputText>
+                                <h:message id="message3" for="username" styleClass="alert alert-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel class="control-label col-sm-4" value="Enter password for manager: " />
+                            <div class="col-sm-8">
+                                <h:inputSecret id="password" value="#{subordinateController.user.password}"
+                                               validatorMessage="Password has wrong format">
+                                    <f:validateRegex id="message3" pattern="^[a-zA-Z0-9-_\\.]{1,20}$" />
+                                    <f:ajax render="message4"/>
+                                </h:inputSecret>
+                                <h:message id="message4" for="password" styleClass="alert alert-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-2">
+                                <h:commandButton class="btn btn-warning" value="Add" action="#{subordinateController.add}" />
+                            </div>
+                        </div>
+                    </h:form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</h:body>
+
+
+</html>

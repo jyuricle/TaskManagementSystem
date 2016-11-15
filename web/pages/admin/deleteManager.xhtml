@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Deleting manager</title>
+    <ui:insert name="header" >
+        <ui:include src="/WEB-INF/template.xhtml" />
+    </ui:insert>
+</h:head>
+
+<h:body>
+    <ui:include src="/WEB-INF/navbar.xhtml" />
+    <div class="container">
+        <div class="jumbotron">
+            <div class="panel panel-info">
+                <div class="panel-heading"><h1>Deleting manager</h1></div>
+                <div class="panel-body">
+                <h:form class="form-horizontal">
+                    <div class="form-group">
+                        <h:outputLabel class="control-label col-sm-4" value="Choose a manager:" />
+                        <div class="col-sm-8">
+                            <h:selectOneListbox class="form-control"
+                                                id="managerItem" value="#{managerController.manager.id}" >
+                                <f:selectItems value="#{managerController.managerList}" var="managerItem"
+                                               itemLabel="#{managerItem.firstName} #{managerItem.lastName}" itemValue="#{managerItem.id}"/>
+                            </h:selectOneListbox>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-2">
+                            <h:commandButton class="btn btn-warning" value="Delete" action="#{managerController.delete}"/>
+                        </div>
+                    </div>
+                </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</h:body>
+
+</html>

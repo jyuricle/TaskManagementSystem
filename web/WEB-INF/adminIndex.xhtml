@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<div class="panel panel-info">
+   <div class="panel-heading"><h2>Welcome! Choose your action, please.</h2></div>
+   <div class="panel-body">
+      <div class="list-group">
+         <h:link value="Add Manager" class="list-group-item list-group-item-success"
+                 outcome="pages/admin/addManager" />
+         <h:link value="Delete Manager"  class="list-group-item list-group-item-success"
+                 outcome="pages/admin/deleteManager" />
+         <h:link value="Add Subordinate" class="list-group-item list-group-item-success"
+                 outcome="pages/admin/addSubordinate" />
+         <h:link value="Delete Subordinate" class="list-group-item list-group-item-success"
+                 outcome="pages/admin/deleteSubordinate" />
+         <h:link value="Info" class="list-group-item list-group-item-success" outcome="pages/admin/info" />
+      </div>
+   </div>
+</div>
+
+</html>

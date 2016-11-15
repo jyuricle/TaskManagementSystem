@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Adding new person</title>
+</h:head>
+
+<h:body>
+    <h1>Tables Data</h1>
+    <h3>Managers</h3>
+    <h:dataTable value="#{managerController.managerList}" var="manager">
+        <h:column><f:facet name="header">ID</f:facet>#{manager.id}</h:column>
+        <h:column><f:facet name="header">First Name</f:facet>#{manager.firstName}</h:column>
+        <h:column><f:facet name="header">Last Name</f:facet>#{manager.lastName}</h:column>
+        <!--<h:column><f:facet name="header">Projects Info</f:facet>-->
+            <!--<h:dataTable value="#{manager.projects}" var="project">-->
+                <!--<h:column>#{project.id}</h:column>-->
+                <!--<h:column>#{project.name}</h:column>-->
+            <!--</h:dataTable>-->
+        <!--</h:column>-->
+    </h:dataTable>
+
+    <h3>Subordinates</h3>
+    <h:dataTable value="#{subordinateController.subordinateList}" var="subordinate">
+        <h:column><f:facet name="header">ID</f:facet>#{subordinate.id}</h:column>
+        <h:column><f:facet name="header">First Name</f:facet>#{subordinate.firstName}</h:column>
+        <h:column><f:facet name="header">Last Name</f:facet>#{subordinate.lastName}</h:column>
+        <!--<h:column><f:facet name="header">Projects Info</f:facet>-->
+            <!--<h:dataTable value="#{subordinate.subtasks}" var="subtask">-->
+                <!--<h:column>#{subtask.id}</h:column>-->
+                <!--<h:column>#{subtask.name}</h:column>-->
+            <!--</h:dataTable>-->
+        <!--</h:column>-->
+    </h:dataTable>
+</h:body>
+
+</html>
