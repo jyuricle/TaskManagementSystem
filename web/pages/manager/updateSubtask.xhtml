@@ -21,14 +21,14 @@
             <div class="panel panel-info">
                 <div class="panel-heading"><h1>Updating subtask</h1></div>
                 <div class="panel-body">
-                    <h:outputLabel class="control-label col-sm-4" value="Choose project: " />
                     <h:form class="form-horizontal">
+                        <h:outputLabel class="control-label col-sm-4" value="Choose project: " />
                         <div class="form-group">
                             <div class="col-sm-8">
                                 <h:selectOneListbox class="form-control" id="projectItem" value="#{subtaskController.project.id}" >
                                     <f:selectItems value="#{subtaskController.manager.projects}" var="projectItem"
                                                    itemLabel="#{projectItem.name}" itemValue="#{projectItem.id}"/>
-                                    <f:ajax listener="#{subtaskController.initProject}" render="subtasks" />
+                                    <f:ajax listener="#{subtaskController.initProject}" render="subtasks info-table" />
                                 </h:selectOneListbox>
                             </div>
                         </div>

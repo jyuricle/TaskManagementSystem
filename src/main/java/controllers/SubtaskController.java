@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.*;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @ManagedBean
 @TransactionManagement(TransactionManagementType.CONTAINER)
+@ViewScoped
 public class SubtaskController {
 
     private static final Logger logger = Logger.getLogger(SubtaskController.class);
@@ -61,6 +63,7 @@ public class SubtaskController {
         subtask.setSubordinate(subordinate);
         subtaskDAO.insert(subtask);
         logger.info("New subtask " + subtask.getName() + " was added!");
+        externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
     }
 
@@ -73,24 +76,20 @@ public class SubtaskController {
         subtask.setProject(project);
         subtaskDAO.update(subtask);
         logger.info("Subtask " + subtask.getName() + " was updated!");
+        externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
     }
 
     public void update(Subtask task) throws IOException {
-        logger.info("SubIIIIIIIIIIIIIIIIIIIIIIIIItask " + task.getName() + " was updated!");
         subtaskDAO.update(task);
     }
 
     public void delete() throws IOException {
         initSubtask();
         if (subtask != null) {
-            logger.error("SSSSSSSSSSSSSSS " + subtask.getName() + subtask.getId());
-            subtask.setSubordinate(null);
-            subtask.setProject(null);
-            subtaskDAO.update(subtask);
-            subtaskDAO.delete(subtask);
-            logger.info("Subtask " + subtask.getName() + " was deleted!");
+            delete(subtask);
         }
+        externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
     }
 

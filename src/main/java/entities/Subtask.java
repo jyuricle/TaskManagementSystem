@@ -15,7 +15,7 @@ public class Subtask extends Task{
     @ManyToOne(cascade = CascadeType.MERGE)
     private Subordinate subordinate;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private Project project;
 
     @Column(name = "status")
