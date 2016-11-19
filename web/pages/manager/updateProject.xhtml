@@ -8,7 +8,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-    <title>Adding new project</title>
+    <title>Updating project</title>
     <ui:insert name="header" >
         <ui:include src="/WEB-INF/template.xhtml" />
     </ui:insert>
@@ -19,9 +19,20 @@
     <div class="container">
         <div class="jumbotron">
             <div class="panel panel-info">
-                <div class="panel-heading"><h1>Adding new project</h1></div>
+                <div class="panel-heading"><h1>Updating project</h1></div>
                 <div class="panel-body">
+                    <h:outputLabel class="control-label col-sm-4" value="Choose project: " />
                     <h:form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                                <h:selectOneListbox class="form-control" id="projectItem" value="#{projectController.project.id}" >
+                                    <f:selectItems value="#{projectController.manager.projects}" var="projectItem"
+                                                   itemLabel="#{projectItem.name}" itemValue="#{projectItem.id}"/>
+                                    <f:ajax listener="#{projectController.initProject}" render="info-table" />
+                                </h:selectOneListbox>
+                            </div>
+                        </div>
+                        <h:panelGroup id="info-table">
                         <div class="form-group">
                             <h:outputLabel class="control-label col-sm-4" value="Enter name: " />
                             <div class="col-sm-8">
@@ -44,7 +55,7 @@
                             <h:outputLabel class="control-label col-sm-4" value="Enter start date (in format: dd-MM-yyyy): " />
                             <div class="col-sm-8">
                                 <h:inputText id="start" value="#{projectController.project.start}"
-                                    converterMessage="Can not convert input to date!">
+                                             converterMessage="Can not convert input to date!">
                                     <f:convertDateTime pattern="dd-MM-yyyy"/>
                                     <f:ajax render="message2" />
                                 </h:inputText>
@@ -52,7 +63,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <h:outputLabel class="control-label col-sm-4" value="Enter end date (in format dd/MM/yyyy): " />
+                            <h:outputLabel class="control-label col-sm-4" value="Enter end date (in format dd-MM-yyyy): " />
                             <div class="col-sm-8">
                                 <h:inputText id="end" value="#{projectController.project.deadline}"
                                              converterMessage="Can not convert input to date!">
@@ -72,9 +83,10 @@
                                 </h:selectOneMenu>
                             </div>
                         </div>
+                        </h:panelGroup>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-2">
-                                <h:commandButton class="btn btn-warning" value="Add" action="#{projectController.add}" />
+                                <h:commandButton class="btn btn-warning" value="Update" action="#{projectController.update}" />
                             </div>
                         </div>
                     </h:form>

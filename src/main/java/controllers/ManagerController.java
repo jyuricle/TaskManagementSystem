@@ -59,13 +59,13 @@ public class ManagerController {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void delete() throws IOException{
-        manager = managerDAO.get(manager.getId());
-        if(manager != null) {
-            managerDAO.delete(manager);
-            logger.info("Manager " + manager.getFirstName() + " " +
-                    manager.getLastName() + " was deleted!");
-        }
-        externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
+//        manager = managerDAO.get(manager.getId());
+//        if(manager != null) {
+//            managerDAO.delete(manager);
+//            logger.info("Manager " + manager.getFirstName() + " " +
+//                    manager.getLastName() + " was deleted!");
+//        }
+//        externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
     }
 
     public List<Manager> getManagerList() {

@@ -8,7 +8,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-    <title>Adding new project</title>
+    <title>Updating subtask</title>
     <ui:insert name="header" >
         <ui:include src="/WEB-INF/template.xhtml" />
     </ui:insert>
@@ -19,13 +19,36 @@
     <div class="container">
         <div class="jumbotron">
             <div class="panel panel-info">
-                <div class="panel-heading"><h1>Adding new project</h1></div>
+                <div class="panel-heading"><h1>Updating subtask</h1></div>
                 <div class="panel-body">
+                    <h:outputLabel class="control-label col-sm-4" value="Choose project: " />
                     <h:form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                                <h:selectOneListbox class="form-control" id="projectItem" value="#{subtaskController.project.id}" >
+                                    <f:selectItems value="#{subtaskController.manager.projects}" var="projectItem"
+                                                   itemLabel="#{projectItem.name}" itemValue="#{projectItem.id}"/>
+                                    <f:ajax listener="#{subtaskController.initProject}" render="subtasks" />
+                                </h:selectOneListbox>
+                            </div>
+                        </div>
+                        <h:outputLabel class="control-label col-sm-4" value="Choose subtask: " />
+                        <h:panelGroup id="subtasks">
+                            <div class="form-group">
+                                <div class="col-sm-8">
+                                    <h:selectOneListbox class="form-control" id="subtaskItem" value="#{subtaskController.subtask.id}" >
+                                        <f:selectItems value="#{subtaskController.project.subtasks}" var="subtaskItem"
+                                                       itemLabel="#{subtaskItem.name}" itemValue="#{subtaskItem.id}"/>
+                                        <f:ajax listener="#{subtaskController.initSubtask}" render="info-table" />
+                                    </h:selectOneListbox>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                        <h:panelGroup id="info-table">
                         <div class="form-group">
                             <h:outputLabel class="control-label col-sm-4" value="Enter name: " />
                             <div class="col-sm-8">
-                                <h:inputText  id="name" value="#{projectController.project.name}"
+                                <h:inputText  id="name" value="#{subtaskController.subtask.name}"
                                               validatorMessage="Name has wrong format!">
                                     <f:validateRegex pattern="^[\p{L}\s0-9'.-]+$" />
                                     <f:ajax render="message1"/>
@@ -36,15 +59,15 @@
                         <div class="form-group">
                             <h:outputLabel class="control-label col-sm-4" value="Enter description: " />
                             <div class="col-sm-8">
-                                <h:inputTextarea id="description" value="#{projectController.project.description}"
+                                <h:inputTextarea id="description" value="#{subtaskController.subtask.description}"
                                                  class="form-control" rows="10" cols="50"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <h:outputLabel class="control-label col-sm-4" value="Enter start date (in format: dd-MM-yyyy): " />
                             <div class="col-sm-8">
-                                <h:inputText id="start" value="#{projectController.project.start}"
-                                    converterMessage="Can not convert input to date!">
+                                <h:inputText id="start" value="#{subtaskController.subtask.start}"
+                                             converterMessage="Can not convert input to date!">
                                     <f:convertDateTime pattern="dd-MM-yyyy"/>
                                     <f:ajax render="message2" />
                                 </h:inputText>
@@ -52,9 +75,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <h:outputLabel class="control-label col-sm-4" value="Enter end date (in format dd/MM/yyyy): " />
+                            <h:outputLabel class="control-label col-sm-4" value="Enter end date (in format dd-MM-yyyy): " />
                             <div class="col-sm-8">
-                                <h:inputText id="end" value="#{projectController.project.deadline}"
+                                <h:inputText id="end" value="#{subtaskController.subtask.deadline}"
                                              converterMessage="Can not convert input to date!">
                                     <f:convertDateTime pattern="dd-MM-yyyy"/>
                                     <f:ajax render="message3"/>
@@ -65,16 +88,17 @@
                         <div class="form-group">
                             <h:outputLabel class="control-label col-sm-4" value="Choose priority: " />
                             <div class="col-sm-8">
-                                <h:selectOneMenu class="form-control" value="#{projectController.priority}">
+                                <h:selectOneMenu class="form-control" value="#{subtaskController.priority}">
                                     <f:selectItem itemValue="1" itemLabel="Low" />
                                     <f:selectItem itemValue="2" itemLabel="Medium" />
                                     <f:selectItem itemValue="3" itemLabel="High" />
                                 </h:selectOneMenu>
                             </div>
                         </div>
+                        </h:panelGroup>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-2">
-                                <h:commandButton class="btn btn-warning" value="Add" action="#{projectController.add}" />
+                                <h:commandButton class="btn btn-warning" value="Update" action="#{subtaskController.update}" />
                             </div>
                         </div>
                     </h:form>

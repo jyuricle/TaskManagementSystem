@@ -4,21 +4,46 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-    <title>Adding new person</title>
+    <title>Deleting project</title>
+    <ui:insert name="header" >
+        <ui:include src="/WEB-INF/template.xhtml" />
+    </ui:insert>
 </h:head>
 
 <h:body>
-    <h1>Adding new person</h1>
-    <h:form>
-        <p><h:outputText value="Enter first name: " /></p>
-        <p><h:inputText value="#{managerController.manager.firstName}" /></p>
-        <p><h:outputText value="Enter last name: " /></p>
-        <p><h:inputText value="#{managerController.manager.lastName}" /></p>
-        <p><h:commandButton value="Update" action="#{managerController.add}"/></p>
-    </h:form>
+    <ui:include src="/WEB-INF/navbar.xhtml" />
+    <div class="container">
+        <div class="jumbotron">
+            <div class="panel panel-info">
+                <div class="panel-heading"><h1>Deleting project</h1></div>
+                <div class="panel-body">
+                    <h:outputLabel class="control-label col-sm-4" value="Choose project: " />
+                    <h:form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                                <h:selectOneListbox class="form-control" id="projectItem" value="#{projectController.project.id}" >
+                                    <f:selectItems value="#{projectController.manager.projects}" var="projectItem"
+                                                   itemLabel="#{projectItem.name}" itemValue="#{projectItem.id}"/>
+                                </h:selectOneListbox>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-2">
+                                <h:commandButton class="btn btn-warning" value="Update" action="#{projectController.delete}" />
+                            </div>
+                        </div>
+                    </h:form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </h:body>
+
 
 </html>

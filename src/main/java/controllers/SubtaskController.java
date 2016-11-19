@@ -55,17 +55,7 @@ public class SubtaskController {
     public void add() throws IOException {
         initProject();
         subordinate = subordinateDAO.get(subordinate.getId());
-        switch (priority) {
-            case 1:
-                subtask.setPriority(Priority.LOW);
-                break;
-            case 2:
-                subtask.setPriority(Priority.MEDIUM);
-                break;
-            case 3:
-                subtask.setPriority(Priority.HIGH);
-                break;
-        }
+        setPriority();
         subtask.setStatus(Status.OPEN);
         subtask.setProject(project);
         subtask.setSubordinate(subordinate);
@@ -74,11 +64,43 @@ public class SubtaskController {
         externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void delete() throws IOException {
-        subtaskDAO.delete(subtask);
-        logger.info("Subtask " + subtask.getName() + " was deleted!");
+    public void initSubtask() {
+        subtask = subtaskDAO.get(subtask.getId());
+    }
+
+    public void update() throws IOException {
+        setPriority();
+        subtask.setProject(project);
+        subtaskDAO.update(subtask);
+        logger.info("Subtask " + subtask.getName() + " was updated!");
         externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
+    }
+
+    public void update(Subtask task) throws IOException {
+        logger.info("SubIIIIIIIIIIIIIIIIIIIIIIIIItask " + task.getName() + " was updated!");
+        subtaskDAO.update(task);
+    }
+
+    public void delete() throws IOException {
+        initSubtask();
+        if (subtask != null) {
+            logger.error("SSSSSSSSSSSSSSS " + subtask.getName() + subtask.getId());
+            subtask.setSubordinate(null);
+            subtask.setProject(null);
+            subtaskDAO.update(subtask);
+            subtaskDAO.delete(subtask);
+            logger.info("Subtask " + subtask.getName() + " was deleted!");
+        }
+        externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void delete(Subtask task) {
+        task.setSubordinate(null);
+        task.setProject(null);
+        subtaskDAO.update(task);
+        subtaskDAO.delete(task);
+        logger.info("Subtask " + task.getName() + " was deleted!");
     }
 
     public void initProject() {
@@ -131,6 +153,20 @@ public class SubtaskController {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    private void setPriority() {
+        switch (priority) {
+            case 1:
+                subtask.setPriority(Priority.LOW);
+                break;
+            case 2:
+                subtask.setPriority(Priority.MEDIUM);
+                break;
+            case 3:
+                subtask.setPriority(Priority.HIGH);
+                break;
+        }
     }
 
 }

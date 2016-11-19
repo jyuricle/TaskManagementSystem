@@ -13,7 +13,7 @@ import java.util.Objects;
 @Table(name = "projects")
 public class Project extends Task {
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade = CascadeType.REMOVE)
     private List<Subtask> subtasks;
 
     @ManyToOne(cascade = CascadeType.REFRESH)

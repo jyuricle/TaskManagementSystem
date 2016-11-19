@@ -21,7 +21,7 @@ import java.util.List;
 
 @ManagedBean
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class SubordinateController {
+public class SubordinateController extends Object{
 
     private static final Logger logger = Logger.getLogger(SubordinateController.class);
 
@@ -54,18 +54,6 @@ public class SubordinateController {
         externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void delete() throws IOException {
-        subordinate = subordinateDAO.get(subordinate.getId());
-        if (subordinate != null) {
-            subordinate.getSubtasks().clear();
-            subordinateDAO.delete(subordinate);
-            logger.info("Subordinate " + subordinate.getFirstName() + " " +
-                    subordinate.getLastName() + " was deleted!");
-        }
-        externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
-    }
-
     public List<Subordinate> getSubordinateList() {
         return subordinateList;
     }
@@ -89,4 +77,10 @@ public class SubordinateController {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public  void a() {
+
+    }
+
+
 }
