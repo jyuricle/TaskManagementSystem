@@ -83,9 +83,11 @@ public class SubordinateInfoController {
             long id = (long)(Math.random() * 1e8);
             MessageConsumer consumer = session.createSharedDurableConsumer(destination, "" + id);
             connection.start();
-            TextMessage msg = (TextMessage)consumer.receive();
-            message = msg.getText();
-            logger.info("Message received: " + message);
+            TextMessage msg = (TextMessage)consumer.receiveNoWait();
+            if (msg != null) {
+                message = msg.getText();
+                logger.info("Message received: " + message);
+            }
         } catch (JMSException ex) {
             logger.error("Error occurred: " + ex);
         }

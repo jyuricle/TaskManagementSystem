@@ -21,7 +21,7 @@ import java.util.List;
 
 @ManagedBean
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class SubordinateController extends Object{
+public class SubordinateController {
 
     private static final Logger logger = Logger.getLogger(SubordinateController.class);
 
@@ -77,10 +77,5 @@ public class SubordinateController extends Object{
     public void setUser(User user) {
         this.user = user;
     }
-
-    public  void a() {
-
-    }
-
 
 }

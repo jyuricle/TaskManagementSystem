@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Subtask</title>
+    <ui:insert name="header" >
+        <ui:include src="/WEB-INF/template.xhtml" />
+    </ui:insert>
+</h:head>
+
+<h:body>
+    <ui:include src="/WEB-INF/navbar.xhtml" />
+    <div class="container">
+        <div class="jumbotron">
+            <div class="panel panel-info">
+                <div class="panel-heading"><h1>Subtasks</h1></div>
+                <div class="panel-body">
+                    <h:form id="form">
+                        <h:dataTable class="table" value="#{subtaskController.subtaskList}" var="task">
+                            <h:column><f:facet name="header">Name</f:facet>#{task.name}</h:column>
+                            <h:column><f:facet name="header">Description</f:facet>#{task.description}</h:column>
+                            <h:column><f:facet name="header">Project Name</f:facet>#{task.project.name}</h:column>
+                            <h:column><f:facet name="header">Start</f:facet>#{task.start}</h:column>
+                            <h:column><f:facet name="header">Deadline</f:facet>#{task.deadline}</h:column>
+                            <h:column><f:facet name="header">Priority</f:facet>#{task.priority}</h:column>
+                            <h:column><f:facet name="header">Status</f:facet>#{task.status}</h:column>
+                            <h:column><f:facet name="header">Edit</f:facet>
+                                <h:commandButton class="btn btn-success" value="Submit"
+                                                 action="#{projectController.submitStatus(task)}">
+                                    <f:ajax render="@form" />
+                                </h:commandButton>
+                                <h:commandButton class="btn btn-danger" value="Decline"
+                                             action="#{projectController.declineStatus(task)}">
+                                <f:ajax render="@form" />
+                            </h:commandButton></h:column>
+                        </h:dataTable>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</h:body>
+
+
+</html>
+

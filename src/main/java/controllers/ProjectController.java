@@ -128,13 +128,13 @@ public class ProjectController {
     public void submitStatus(Subtask task) throws IOException {
         task.setStatus(Status.DONE);
         subtaskController.update(task);
-        logger.error("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        logger.info("Subtask status was changed to \"DONE\"");
     }
 
     public void declineStatus(Subtask task) throws IOException {
         task.setStatus(Status.OPEN);
         subtaskController.update(task);
-        logger.error("OOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        logger.info("Subtask status was changed to \"OPEN\"");
     }
 
     public List<Project> getProjectList() {
