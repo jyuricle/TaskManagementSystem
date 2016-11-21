@@ -6,11 +6,14 @@ import entities.*;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.jms.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -43,6 +46,12 @@ public class ProjectController {
     private Integer priority;
 
     private Manager manager;
+
+    @Resource(mappedName = "java:/JmsXA")
+    private ConnectionFactory connectionFactory;
+
+    @Resource(mappedName="java:jboss/exported/jms/topic/test")
+    private Destination destination;
 
     @PostConstruct
     public void init() {
@@ -100,9 +109,34 @@ public class ProjectController {
         project.setManager(manager);
         projectDAO.update(project);
         logger.info("Project " + project.getName() + " was updated!");
+        try {
+            Connection connection = connectionFactory.createConnection();
+            Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
+            MessageProducer producer = session.createProducer(destination);
+            TextMessage message = session.createTextMessage();
+            message.setText("Project " + project.getName() + " information was updated");
+            producer.send(message);
+            logger.info("message sent");
+            session.close();
+            connection.close();
+
+        } catch (JMSException ex) {
+            logger.error("Sending message error: " +  ex);
+        }
         externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
     }
 
+    public void submitStatus(Subtask task) throws IOException {
+        task.setStatus(Status.DONE);
+        subtaskController.update(task);
+        logger.error("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+    }
+
+    public void declineStatus(Subtask task) throws IOException {
+        task.setStatus(Status.OPEN);
+        subtaskController.update(task);
+        logger.error("OOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+    }
 
     public List<Project> getProjectList() {
         return projectList;

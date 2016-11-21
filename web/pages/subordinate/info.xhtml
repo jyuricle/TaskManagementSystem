@@ -19,8 +19,11 @@
     <div class="container">
         <div class="jumbotron">
             <div class="panel panel-info">
-                <div class="panel-heading"><h1>Subtasks</h1></div>
+                <div class="panel-heading"><h1>My subtasks</h1></div>
                 <div class="panel-body">
+                    <div class="alert alert-danger">
+                        <h:outputText value="#{subordinateInfoController.showMessage()}" />
+                    </div>
                     <h:form id="form">
                         <h:dataTable class="table" value="#{subordinateInfoController.subordinate.subtasks}" var="task">
                             <h:column><f:facet name="header">Name</f:facet>#{task.name}</h:column>
@@ -37,6 +40,41 @@
                                 </h:commandButton></h:column>
                         </h:dataTable>
                     </h:form>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading"><h1>All projects</h1></div>
+                <div class="panel-body">
+                    <h:outputLabel class="control-label col-sm-4" value="Choose project: " />
+                    <h:form>
+                        <div class="col-sm-8">
+                            <h:selectOneListbox class="form-control" id="projectItem" value="#{subordinateInfoController.project.id}" >
+                                <f:selectItems value="#{subordinateInfoController.projectList}" var="projectItem"
+                                               itemLabel="#{projectItem.name}" itemValue="#{projectItem.id}"/>
+                                <f:ajax listener="#{subordinateInfoController.initProject}" render="info-table" />
+                            </h:selectOneListbox>
+                        </div>
+                    </h:form>
+                    <h:panelGrid id="info-table">
+                        <h3>Project</h3>
+                        <h:dataTable class="table" value="#{subordinateInfoController.project}" var="task">
+                            <h:column><f:facet name="header">Name</f:facet>#{task.name}</h:column>
+                            <h:column><f:facet name="header">Description</f:facet>#{task.description}</h:column>
+                            <h:column><f:facet name="header">Start</f:facet>#{task.start}</h:column>
+                            <h:column><f:facet name="header">Deadline</f:facet>#{task.deadline}</h:column>
+                            <h:column><f:facet name="header">Priority</f:facet>#{task.priority}</h:column>
+                        </h:dataTable>
+                        <h3>Subtasks</h3>
+                        <h:dataTable class="table" value="#{subordinateInfoController.project.subtasks}" var="task">
+                            <h:column><f:facet name="header">Name</f:facet>#{task.name}</h:column>
+                            <h:column><f:facet name="header">Description</f:facet>#{task.description}</h:column>
+                            <h:column><f:facet name="header">Project Name</f:facet>#{task.subordinate.firstName} #{task.subordinate.lastName}</h:column>
+                            <h:column><f:facet name="header">Start</f:facet>#{task.start}</h:column>
+                            <h:column><f:facet name="header">Deadline</f:facet>#{task.deadline}</h:column>
+                            <h:column><f:facet name="header">Priority</f:facet>#{task.priority}</h:column>
+                            <h:column><f:facet name="header">Status</f:facet>#{task.status}</h:column>
+                        </h:dataTable>
+                    </h:panelGrid>
                 </div>
             </div>
         </div>

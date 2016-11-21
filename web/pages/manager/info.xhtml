@@ -56,6 +56,22 @@
                             <h:column><f:facet name="header">Deadline</f:facet>#{task.deadline}</h:column>
                             <h:column><f:facet name="header">Priority</f:facet>#{task.priority}</h:column>
                             <h:column><f:facet name="header">Status</f:facet>#{task.status}</h:column>
+
+                            <h:column>
+                                <h:form id="form1">
+                                    <h:commandButton class="btn btn-warning" value="Accept">
+                                        <f:param name="action" value="#{projectController.submitStatus(task)}"/>
+                                    </h:commandButton>
+                                </h:form>
+                            </h:column>
+                            <h:column>
+                                <h:form id="form">
+                                    <h:commandButton class="btn btn-warning" value="Decline" >
+                                        <f:param name="action" value="#{projectController.declineStatus(task)}"/>
+                                    </h:commandButton>
+                                </h:form>
+                            </h:column>
+
                         </h:dataTable>
                     </h:panelGrid>
                 </div>
