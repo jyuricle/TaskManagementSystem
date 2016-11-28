@@ -20,6 +20,9 @@ import javax.jms.*;
 import java.util.List;
 
 /**
+ * Provides subordinate with necessary information and
+ * implements some actions with subtasks
+ *
  * @author Yurii Krat
  * @version 1.0, 15.11.16
  */
@@ -28,27 +31,59 @@ import java.util.List;
 @ViewScoped
 public class SubordinateInfoController {
 
+    /**
+     * Logger instance
+     */
     private final static Logger logger = Logger.getLogger(SubordinateInfoController.class);
 
+    /**
+     * Subordinate's dao for interaction with database
+     */
     @EJB
     private SubordinateDAO subordinateDAO;
+
+    /**
+     * Subtask's dao for interaction with database
+     */
     @EJB
     private SubtaskDAO subtaskDAO;
 
+    /**
+     * Project's dao for interaction with database
+     */
     @EJB
     private ProjectDAO projectDAO;
 
+    /**
+     * List of all projects
+     */
     private List<Project> projectList;
+
+    /**
+     * Project's instance
+     */
     private Project project;
 
+    /**
+     * Subordinate's instance
+     */
     private Subordinate subordinate;
 
+    /**
+     * Connection factory instance
+     */
     @Resource(mappedName = "java:/JmsXA")
     private ConnectionFactory connectionFactory;
 
+    /**
+     * Topic instance for receiving messages
+     */
     @Resource(mappedName="java:jboss/exported/jms/topic/test")
     private Topic destination;
 
+    /**
+     * Initialization of fields after creating of bean
+     */
     @PostConstruct
     public void init() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -58,16 +93,28 @@ public class SubordinateInfoController {
         projectList = projectDAO.getAll();
     }
 
+    /**
+     * Initializes selected project
+     */
     public void initProject() {
         project = projectDAO.get(project.getId());
     }
 
+    /**
+     * Changes subtask's status to "REVIEW"
+     * @param task subtask which status changes
+     */
     public void updateStatus(Subtask task) {
         task.setStatus(Status.REVIEW);
         subtaskDAO.update(task);
         logger.info("Subtask " + task.getName() + " was updated!");
     }
 
+    /**
+     * Defines if subtask is completed
+     * @param task subtask
+     * @return true if subtask is completed, otherwise false
+     */
     public String completed(Subtask task) {
         if (task.getStatus() == Status.DONE) {
             return "glyphicon glyphicon-ok";
@@ -75,6 +122,10 @@ public class SubordinateInfoController {
         return "glyphicon glyphicon-remove";
     }
 
+    /**
+     * Receives message about updating project's information
+     * @return
+     */
     public String showMessage() {
         String message = null;
         try {

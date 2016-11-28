@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Represents subordinate's entity
+ *
  * @author Yurii Krat
  * @version 1.0, 09.11.16
  */
@@ -13,6 +15,9 @@ import java.util.Objects;
 @Table(name = "subordinates")
 public class Subordinate extends Person {
 
+    /**
+     * List of subordinate's subtasks
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subordinate", fetch = FetchType.EAGER)
     private List<Subtask> subtasks;
 

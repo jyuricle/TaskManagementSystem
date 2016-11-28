@@ -15,30 +15,55 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * Implements manager's functions and provides him with necessary information
+ *
  * @author Yurii Krat
  * @version 1.0, 09.11.16
  */
-
 @ManagedBean
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ManagerController {
 
+    /**
+     * Logger instance
+     */
     private static final Logger logger = Logger.getLogger(ManagerController.class);
 
+    /**
+     * Manager's dao for interaction with database
+     */
     @EJB
     private ManagerDAO managerDAO;
 
+    /**
+     * Project's dao for interaction with database
+     */
     @EJB
     private ProjectDAO projectDAO;
 
+    /**
+     * List of all managers in system
+     */
     private List<Manager> managerList;
 
+    /**
+     * Manager instance
+     */
     private Manager manager;
 
+    /**
+     * User instance
+     */
     private User user;
 
+    /**
+     * External context instance
+     */
     private ExternalContext externalContext;
 
+    /**
+     * Initialization of fields after creating of bean
+     */
     @PostConstruct
     public void init() {
         managerList = managerDAO.getAll();
@@ -47,6 +72,11 @@ public class ManagerController {
         externalContext = FacesContext.getCurrentInstance().getExternalContext();
     }
 
+    /**
+     * Adds new manager to system
+     *
+     * @throws IOException
+     */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void add() throws IOException {
         user.setRole("Manager");

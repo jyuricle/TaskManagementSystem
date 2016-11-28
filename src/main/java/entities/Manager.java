@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Represents manager's entity
+ *
  * @author Yurii Krat
  * @version 1.0, 09.11.16
  */
@@ -13,6 +15,9 @@ import java.util.Objects;
 @Table(name = "managers")
 public class Manager extends Person {
 
+    /**
+     * List of manager's projects
+     */
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "manager")
     private List<Project> projects;
 

@@ -6,6 +6,8 @@ import javax.faces.context.FacesContext;
 import java.io.IOException;
 
 /**
+ * Implements logout
+ *
  * @author Yurii Krat
  * @version 1.0, 10.11.16
  */
@@ -17,6 +19,11 @@ public class LogoutController {
 
     }
 
+    /**
+     * Invalidates user's session
+     *
+     * @throws IOException
+     */
     public void logout() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.invalidateSession();

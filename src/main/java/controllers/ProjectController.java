@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * Implements actions with projects
+ *
  * @author Yurii Krat
  * @version 1.0, 09.11.16
  */
@@ -25,33 +27,69 @@ import java.util.List;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ProjectController {
 
+    /**
+     * Logger instance
+     */
     private static final Logger logger = Logger.getLogger(ProjectController.class);
 
+    /**
+     * Project's dao for interaction with database
+     */
     @EJB
     private ProjectDAO projectDAO;
 
+    /**
+     * Manager's dao for interaction with database
+     */
     @EJB
     private ManagerDAO managerDAO;
 
+    /**
+     * Subtask's controller
+     */
     @ManagedProperty("#{subtaskController}")
     private SubtaskController subtaskController;
 
+    /**
+     * List of all projects
+     */
     private List<Project> projectList;
 
+    /**
+     * Project instance
+     */
     private Project project;
 
+    /**
+     * External context instance
+     */
     private ExternalContext externalContext;
 
+    /**
+     * Priority instance
+     */
     private Integer priority;
 
+    /**
+     * Manager's instance
+     */
     private Manager manager;
 
+    /**
+     * Connection factory instance for message service
+     */
     @Resource(mappedName = "java:/JmsXA")
     private ConnectionFactory connectionFactory;
 
+    /**
+     * Destination instance for sending message
+     */
     @Resource(mappedName="java:jboss/exported/jms/topic/test")
     private Destination destination;
 
+    /**
+     * Initialization of fields after creating of bean
+     */
     @PostConstruct
     public void init() {
         projectList = projectDAO.getAll();
@@ -60,6 +98,11 @@ public class ProjectController {
         manager = managerDAO.getManagerByUserName(externalContext.getRemoteUser());
     }
 
+    /**
+     * Adds new project to the system
+     *
+     * @throws IOException
+     */
     public void add() throws IOException {
         setPriority();
         project.setManager(manager);
@@ -68,6 +111,10 @@ public class ProjectController {
         externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
     }
 
+    /**
+     * Calculates progress of doing project's
+     * @return
+     */
     public int progress() {
         if (project.getSubtasks() != null) {
             int size = project.getSubtasks().size();
@@ -84,10 +131,18 @@ public class ProjectController {
         return 0;
     }
 
+    /**
+     * Initializes selected project
+     */
     public void initProject() {
         project = projectDAO.get(project.getId());
     }
 
+    /**
+     * Removes project and all it's subtasks from system
+     *
+     * @throws IOException
+     */
     public void delete() throws IOException {
         initProject();
         if (project != null) {
@@ -103,6 +158,12 @@ public class ProjectController {
         externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
     }
 
+    /**
+     * Updates project's information and sends
+     * message about updating to subordinates
+     *
+     * @throws IOException
+     */
     public void update() throws IOException {
         setPriority();
         project.setManager(manager);
@@ -125,12 +186,24 @@ public class ProjectController {
         externalContext.redirect("/TasksManagement_war_exploded/index.xhtml");
     }
 
+    /**
+     * Changes status of subtask to "DONE"
+     * @param task subtask which status changes
+     *
+     * @throws IOException
+     */
     public void submitStatus(Subtask task) throws IOException {
         task.setStatus(Status.DONE);
         subtaskController.update(task);
         logger.info("Subtask status was changed to \"DONE\"");
     }
 
+    /**
+     * Changes status of subtask to "OPEN"
+     * @param task subtask which status changes
+     *
+     * @throws IOException
+     */
     public void declineStatus(Subtask task) throws IOException {
         task.setStatus(Status.OPEN);
         subtaskController.update(task);

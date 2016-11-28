@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Represents single project in system
+ *
  * @author Yurii Krat
  * @version 1.0, 09.11.16
  */
@@ -13,9 +15,15 @@ import java.util.Objects;
 @Table(name = "projects")
 public class Project extends Task {
 
+    /**
+     * List of project's subtasks
+     */
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade = CascadeType.REMOVE)
     private List<Subtask> subtasks;
 
+    /**
+     * Responsible manager for project
+     */
     @ManyToOne(cascade = CascadeType.REFRESH)
     private Manager manager;
 

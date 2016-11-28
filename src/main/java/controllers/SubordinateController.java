@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * Implements subordinate's functions and provides him with
+ * necessary information
+ *
  * @author Yurii Krat
  * @version 1.0, 09.11.16
  */
@@ -23,19 +26,40 @@ import java.util.List;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class SubordinateController {
 
+    /**
+     * Logger instance
+     */
     private static final Logger logger = Logger.getLogger(SubordinateController.class);
 
+    /**
+     * Subordinate's dao for interaction with database
+     */
     @EJB
     private SubordinateDAO subordinateDAO;
 
+    /**
+     * List of all subordinates
+     */
     private List<Subordinate> subordinateList;
 
+    /**
+     * Subordinate's instance
+     */
     private Subordinate subordinate;
 
+    /**
+     * User's instance
+     */
     private User user;
 
+    /**
+     * External context instance
+     */
     private ExternalContext externalContext;
 
+    /**
+     * Initialization of fields after creating of bean
+     */
     @PostConstruct
     public void init() {
         subordinateList = subordinateDAO.getAll();
@@ -44,6 +68,10 @@ public class SubordinateController {
         externalContext = FacesContext.getCurrentInstance().getExternalContext();
     }
 
+    /**
+     * Adds new subordinate to the system
+     * @throws IOException
+     */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void add() throws IOException {
         user.setRole("Subordinate");
